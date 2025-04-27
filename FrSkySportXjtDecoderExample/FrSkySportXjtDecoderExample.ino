@@ -1,9 +1,9 @@
 /*
   FrSky S-Port Telemetry Decoder library example for the XJT decoder class (old hub telemetry and basic RSSI/ADC1/ADC2/RxBatt/SWR data)
-  (c) Pawelsky 202000503
+  (c) Pawelsky 20210108
   Not for commercial use
   
-  Note that you need Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) or ATmega328P based (e.g. Pro Mini, Nano, Uno) board and FrSkySportDecoder library for this example to work
+  Note that you need Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) or ATmega328P based (e.g. Pro Mini, Nano, Uno) board and FrSkySportDecoder library for this example to work
 */
 
 // Uncomment the #define below to enable internal polling of data.

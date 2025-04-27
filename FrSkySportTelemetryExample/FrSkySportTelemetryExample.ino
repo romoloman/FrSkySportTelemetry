@@ -1,9 +1,9 @@
 /*
   FrSky S-Port Telemetry library example
-  (c) Pawelsky 202000503
+  (c) Pawelsky 20250412
   Not for commercial use
   
-  Note that you need Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) or ATmega328P based (e.g. Pro Mini, Nano, Uno) board and FrSkySportTelemetry library for this example to work
+  Note that you need Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) or ATmega328P based (e.g. Pro Mini, Nano, Uno) board and FrSkySportTelemetry library for this example to work
 */
 
 // Uncomment the #define below to enable internal polling of data.
@@ -15,6 +15,7 @@
 #include "FrSkySportSensorEsc.h"
 #include "FrSkySportSensorFcs.h"
 #include "FrSkySportSensorFlvss.h"
+#include "FrSkySportSensorGasSuite.h"
 #include "FrSkySportSensorGps.h"
 #include "FrSkySportSensorRpm.h"
 #include "FrSkySportSensorSp2uart.h"
@@ -30,6 +31,7 @@ FrSkySportSensorEsc esc;                               // Create ESC sensor with
 FrSkySportSensorFcs fcs;                               // Create FCS-40A sensor with default ID (use ID8 for FCS-150A)
 FrSkySportSensorFlvss flvss1;                          // Create FLVSS sensor with default ID
 FrSkySportSensorFlvss flvss2(FrSkySportSensor::ID15);  // Create FLVSS sensor with given ID
+FrSkySportSensorGasSuite gas;                          // Create Gas Suite sensor with default ID
 FrSkySportSensorGps gps;                               // Create GPS sensor with default ID
 FrSkySportSensorRpm rpm;                               // Create RPM sensor with default ID
 FrSkySportSensorSp2uart sp2uart;                       // Create SP2UART Type B sensor with default ID
@@ -45,9 +47,9 @@ void setup()
 {
   // Configure the telemetry serial port and sensors (remember to use & to specify a pointer to sensor)
 #if defined(TEENSY_HW)
-  telemetry.begin(FrSkySportSingleWireSerial::SERIAL_3, &ass, &esc, &fcs, &flvss1, &flvss2, &gps, &rpm, &sp2uart, &vario);
+  telemetry.begin(FrSkySportSingleWireSerial::SERIAL_3, &ass, &esc, &fcs, &flvss1, &flvss2, &gas, &gps, &rpm, &sp2uart, &vario);
 #else
-  telemetry.begin(FrSkySportSingleWireSerial::SOFT_SERIAL_PIN_12, &ass, &esc, &fcs, &flvss1, &flvss2, &gps, &rpm, &sp2uart, &vario);
+  telemetry.begin(FrSkySportSingleWireSerial::SOFT_SERIAL_PIN_12, &ass, &esc, &fcs, &flvss1, &flvss2, &gas, &gps, &rpm, &sp2uart, &vario);
 #endif
 }
 
@@ -75,6 +77,16 @@ void loop()
   // (set Voltage source to Cells in menu to use this data for battery voltage)
   flvss1.setData(4.07, 4.08, 4.09, 4.10, 4.11, 4.12);  // Cell voltages in volts (cells 1-6)
   flvss2.setData(4.13, 4.14);                          // Cell voltages in volts (cells 7-8)
+
+  // Set Gas Suite sensor data
+  gas.setData(-10.3, // Temperature #1 in degrees Celsuis (can be negative, will be rounded)
+              200.6, // Temperature #2 in degrees Celsuis (can be negative, will be rounded)
+              80000, // Rotations per minute
+              55000, // Residual volume in ml
+              73,    // Residual percentage (0-100)
+              1230,  // Flow in ml/min
+              1500,  // Maximum flow in ml/min
+              1111); // Average flow in ml/min
 
   // Set GPS sensor data
   gps.setData(48.858289, 2.294502,  // Latitude and longitude in degrees decimal (positive for N/E, negative for S/W)
