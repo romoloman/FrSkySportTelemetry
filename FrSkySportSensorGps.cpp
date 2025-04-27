@@ -98,6 +98,9 @@ uint16_t FrSkySportSensorGps::decodeData(uint8_t id, uint16_t appId, uint32_t da
       case GPS_COG_DATA_ID:
         cog = data / 100.0;
         return appId;
+      case GPS_NUMSAT_DATA_ID:
+        numsat = data;
+        return appId;
       case GPS_DATE_TIME_DATA_ID:
         if((data & 0xFF) > 0)  // is date?
         {
@@ -122,6 +125,7 @@ float FrSkySportSensorGps::getLon() { return lon; }
 float FrSkySportSensorGps::getAltitude() { return altitude; }
 float FrSkySportSensorGps::getSpeed() { return speed; }
 float FrSkySportSensorGps::getCog() { return cog; }
+uint16_t FrSkySportSensorGps::getNumsat() { return numsat; }
 uint8_t FrSkySportSensorGps::getYear() { return year; }
 uint8_t FrSkySportSensorGps::getMonth() { return month; }
 uint8_t FrSkySportSensorGps::getDay() { return day; }

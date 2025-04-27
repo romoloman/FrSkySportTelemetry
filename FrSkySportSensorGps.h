@@ -16,6 +16,7 @@
 #define GPS_SPEED_DATA_ID     0x0830
 #define GPS_COG_DATA_ID       0x0840
 #define GPS_DATE_TIME_DATA_ID 0x0850
+#define GPS_NUMSAT_DATA_ID    0x5100
 
 #define GPS_LAT_LON_DATA_PERIOD   1000
 #define GPS_ALT_DATA_PERIOD       500
@@ -42,6 +43,7 @@ class FrSkySportSensorGps : public FrSkySportSensor
     uint8_t getHour();
     uint8_t getMinute();
     uint8_t getSecond();
+    uint16_t getNumsat();
 
   private:
     static uint32_t setLatLon(float latLon, bool isLat);
@@ -71,6 +73,7 @@ class FrSkySportSensorGps : public FrSkySportSensor
     uint8_t hour;
     uint8_t minute;
     uint8_t second;
+    uint16_t numsat;
 };
 
 #endif // _FRSKY_SPORT_SENSOR_GPS_H_
